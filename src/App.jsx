@@ -7,7 +7,6 @@ import Dashboard from "./pages/Dashboard";
 import Calculator from "./pages/Calculator";
 import History from "./pages/History";
 import Profile from "./pages/Profile";
-
 const App = () => {
 
 const [Tasks, setTasks] = useState(() => {
