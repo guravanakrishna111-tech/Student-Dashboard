@@ -1,0 +1,591 @@
+
+.HistoryContainer {
+  min-height: 100vh;
+  background: linear-gradient(20deg, #875b2c, #dc1f93);
+  padding-bottom: 40px;
+}
+
+.HistoryContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.HistoryHeader {
+  text-align: center;
+  color: white;
+  margin: 40px 0 30px 0;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.HistoryHeader h1 {
+  font-size: 3em;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.HistoryHeader p {
+  font-size: 1.2em;
+  opacity: 0.9;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.StatsOverview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 40px 0;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.StatCard {
+  background: white;
+  padding: 25px 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.StatCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.StatIcon {
+  font-size: 2.5em;
+  line-height: 1;
+  animation: bounce 2s infinite;
+}
+
+.StatDetails h3 {
+  margin: 0;
+  font-size: 0.9em;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.StatValue {
+  margin: 8px 0 0 0;
+  font-size: 2em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.TabContainer {
+  margin: 40px 0;
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.TabButtons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.TabBtn {
+  padding: 12px 25px;
+  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.TabBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.TabBtn.active {
+  background: white;
+  color: #667eea;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+.TabContent {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.5s ease-out;
+}
+
+.TabContent h2 {
+  color: #333;
+  margin: 0 0 25px 0;
+  font-size: 1.8em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.TabHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.TabHeader h2 {
+  margin: 0;
+}
+.EmptyState {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.EmptyIcon {
+  font-size: 4em;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.EmptyState p {
+  font-size: 1.1em;
+  color: #999;
+  margin: 0;
+  line-height: 1.6;
+}
+.SearchBox {
+  margin-bottom: 25px;
+}
+
+.SearchInput {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  font-size: 1em;
+  transition: all 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.SearchInput:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+.ActivityList {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.ActivitySection h3 {
+  color: #667eea;
+  margin: 0 0 15px 0;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ActivityItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-left: 4px solid #667eea;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  gap: 20px;
+}
+
+.ActivityItem:hover {
+  background: #f0f4ff;
+  transform: translateX(5px);
+}
+
+.ActivityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.ActivityType {
+  font-size: 0.85em;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.ActivityDetail {
+  font-size: 1em;
+  color: #333;
+  font-weight: 500;
+}
+
+.ActivityTime {
+  color: #999;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.CalculationItem {
+  border-left-color: #667eea;
+}
+
+.TaskItem {
+  border-left-color: #48bb78;
+}
+.HistoryTable {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.TableHeader {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  gap: 15px;
+  padding: 20px;
+  align-items: center;
+}
+
+.TableRow {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 0.5fr;
+  border-bottom: 1px solid #eee;
+  padding: 15px 20px;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.TableRow:hover {
+  background: #f9f9f9;
+}
+
+.TableCell {
+  word-break: break-word;
+}
+
+.TableCell.Result {
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1.1em;
+}
+
+.TableCell.Action {
+  text-align: center;
+}
+
+.DeleteBtn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+}
+
+.DeleteBtn:hover {
+  background: #ff5252;
+  transform: scale(1.1);
+}
+
+.ClearBtn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.95em;
+}
+
+.ClearBtn:hover {
+  background: #ff5252;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Tasks List */
+.TasksList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.CompletedTaskItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(72, 187, 120, 0.1) 0%, rgba(72, 187, 120, 0.05) 100%);
+  border-left: 4px solid #48bb78;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.CompletedTaskItem:hover {
+  background: linear-gradient(135deg, rgba(72, 187, 120, 0.15) 0%, rgba(72, 187, 120, 0.1) 100%);
+  transform: translateX(8px);
+}
+
+.TaskCheckmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #48bb78;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.2em;
+  flex-shrink: 0;
+}
+
+.TaskName {
+  flex: 1;
+  color: #333;
+  font-size: 1em;
+  font-weight: 500;
+  text-decoration: line-through;
+}
+
+.TaskBadge {
+  background: #48bb78;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.TaskSummary {
+  margin-top: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.TaskSummary p {
+  margin: 0;
+}
+.InsightsSection {
+  margin-top: 50px;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.InsightsSection h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.InsightsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.InsightCard {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.InsightCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.InsightCard h3 {
+  color: #667eea;
+  margin: 0 0 15px 0;
+  font-size: 1.1em;
+}
+
+.InsightValue {
+  margin: 10px 0;
+  font-size: 2em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.InsightCard small {
+  color: #999;
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@media (max-width: 768px) {
+  .HistoryContent {
+    padding: 15px;
+  }
+
+  .HistoryHeader h1 {
+    font-size: 2em;
+  }
+
+  .StatsOverview {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .TabButtons {
+    flex-direction: column;
+  }
+
+  .TabBtn {
+    width: 100%;
+  }
+
+  .TabContent {
+    padding: 20px;
+  }
+
+  .TabHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .TabHeader h2 {
+    margin-bottom: 0;
+  }
+
+  .TableHeader,
+  .TableRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 12px;
+    font-size: 0.9em;
+  }
+
+  .ActivityItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .InsightsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .HistoryHeader h1 {
+    font-size: 1.5em;
+  }
+
+  .StatCard {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .TabButtons {
+    gap: 8px;
+  }
+
+  .TabBtn {
+    padding: 8px 15px;
+    font-size: 0.85em;
+  }
+}

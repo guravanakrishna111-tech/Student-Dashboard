@@ -1,0 +1,255 @@
+.TaskManager {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.TaskManager h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+}
+.TaskManager h3 {
+    color: rgba(255, 255, 255, 0.95);
+    padding: 15px 0;
+    margin: 0;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+.TaskManager .put {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    animation: slideDown 0.5s ease-out;
+}
+
+.TaskManager input {
+    flex: 1;
+    padding: 15px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.TaskManager input:focus {
+    border-color: white;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.TaskManager input::placeholder {
+    color: #999;
+}
+.TaskManager button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+.TaskManager .put button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(245, 87, 108, 0.6);
+}
+
+.TaskManager .put button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(245, 87, 108, 0.4);
+}
+.TaskManager .list {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.TaskManager ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.TaskManager ul h3 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+.TaskManager li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #333;
+    font-size: 1em;
+    word-break: break-word;
+}
+
+.TaskManager li:hover {
+    transform: translateX(5px);
+    background: linear-gradient(135deg, #e8f0ff 0%, #d4e4f7 100%);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.TaskManager li.completed {
+    opacity: 0.7;
+    background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%);
+    border-left-color: #999;
+}
+
+.TaskManager li.completed svg {
+    color: #52c41a;
+}
+.TaskManager li button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    font-size: 0.85em;
+    background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(238, 9, 121, 0.3);
+}
+
+.TaskManager li button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(238, 9, 121, 0.5);
+}
+
+.TaskManager li button:active {
+    transform: scale(0.98);
+}
+.TaskManager > h3:last-child {
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.small-shadow{ box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+.medium-shadow{ box-shadow:0 5px 15px rgba(0,0,0,0.15); }
+.large-shadow{ box-shadow:0 15px 40px rgba(0,0,0,0.2); }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes taskAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.TaskManager ul li {
+    animation: taskAppear 0.3s ease-out;
+}
+@media (max-width: 600px) {
+    .TaskManager {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .TaskManager h1 {
+        font-size: 2em;
+    }
+
+    .TaskManager .put {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .TaskManager .put button {
+        width: 100%;
+    }
+
+    .TaskManager li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .TaskManager li button {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+.TaskManager .result{
+    display:contents;
+    align-items: center;
+    align-self: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    color:white;
+    background: none;
+    border: solid 1px white;
+    border-radius: 15px;
+}
+.container{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+@media (min-width:768px){
+  .container{
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+}
+@media (min-width:1024px){
+  .container{
+    justify-content:space-between;
+  }
+}
