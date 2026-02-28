@@ -6,6 +6,7 @@ A modern, responsive **Student Productivity Dashboard** built using **React + Vi
 
 ## 🚀 Live Demo
 
+https://guravanakrishna111-tech.github.io/Student-Dashboard/
 
 ---
 
