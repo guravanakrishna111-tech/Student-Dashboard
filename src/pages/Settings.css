@@ -1,0 +1,434 @@
+.SettingsContainer {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: background 0.3s;
+}
+
+.SettingsContainer.dark {
+  background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+}
+
+.SettingsContent {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.SettingsContainer.dark .SettingsContent {
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.SettingsHeader {
+  margin-bottom: 40px;
+  text-align: center;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 20px;
+}
+
+.SettingsContainer.dark .SettingsHeader {
+  border-bottom-color: #444;
+}
+
+.SettingsHeader h1 {
+  font-size: 2.5rem;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.SettingsContainer.dark .SettingsHeader h1 {
+  color: #7c3aed;
+}
+
+.SettingsHeader p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.SettingsContainer.dark .SettingsHeader p {
+  color: #aaa;
+}
+
+/* Success Message */
+.SuccessMessage {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #10b981;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Setting Sections */
+.SettingSection {
+  margin-bottom: 35px;
+  padding: 25px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s;
+}
+
+.SettingsContainer.dark .SettingSection {
+  background: #333;
+  border-left-color: #7c3aed;
+}
+
+.SettingSection:hover {
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.SectionHeader {
+  margin-bottom: 20px;
+}
+
+.SectionHeader h2 {
+  font-size: 1.5rem;
+  margin: 0 0 5px 0;
+  color: #1f2937;
+}
+
+.SettingsContainer.dark .SectionHeader h2 {
+  color: #fff;
+}
+
+.SectionHeader p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.SettingsContainer.dark .SectionHeader p {
+  color: #aaa;
+}
+
+/* Setting Items */
+.SettingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 20px;
+}
+
+.SettingsContainer.dark .SettingItem {
+  border-bottom-color: #444;
+}
+
+.SettingItem:last-child {
+  border-bottom: none;
+}
+
+.SettingLabel {
+  flex: 1;
+}
+
+.SettingTitle {
+  display: block;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.SettingsContainer.dark .SettingTitle {
+  color: #fff;
+}
+
+.SettingDescription {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.SettingsContainer.dark .SettingDescription {
+  color: #aaa;
+}
+
+/* Toggle Switch */
+.ToggleSwitch {
+  position: relative;
+  display: inline-flex;
+  width: 60px;
+  height: 34px;
+  align-items: center;
+}
+
+.ToggleInput {
+  display: none;
+}
+
+.ToggleLabel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ToggleInput:checked + .ToggleLabel {
+  background-color: #667eea;
+}
+
+.ToggleSlider {
+  content: '';
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.ToggleInput:checked + .ToggleLabel .ToggleSlider {
+  transform: translateX(26px);
+}
+
+/* Input Group */
+.InputGroup {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  max-width: 400px;
+}
+
+.SettingInput {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.SettingsContainer.dark .SettingInput {
+  background: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+.SettingInput:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.SaveButton {
+  padding: 12px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.SaveButton:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+/* Action Buttons */
+.ActionButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ActionButton.export {
+  background: #3b82f6;
+  color: white;
+}
+
+.ActionButton.export:hover {
+  background: #2563eb;
+}
+
+.ActionButton.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.ActionButton.danger:hover {
+  background: #dc2626;
+}
+
+/* Confirm Dialog */
+.ConfirmDialog {
+  margin-top: 15px;
+  padding: 20px;
+  background: white;
+  border: 2px solid #ef4444;
+  border-radius: 8px;
+  animation: slideIn 0.3s;
+}
+
+.SettingsContainer.dark .ConfirmDialog {
+  background: #3a3a3a;
+  border-color: #ef4444;
+}
+
+.ConfirmDialog h3 {
+  margin: 0 0 10px 0;
+  color: #ef4444;
+}
+
+.ConfirmDialog p {
+  color: #666;
+  margin: 0 0 15px 0;
+}
+
+.SettingsContainer.dark .ConfirmDialog p {
+  color: #aaa;
+}
+
+.DialogButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.ConfirmButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.ConfirmButton.danger {
+  background: #ef4444;
+  color: white;
+}
+
+.ConfirmButton.danger:hover {
+  background: #dc2626;
+}
+
+.ConfirmButton.cancel {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+.SettingsContainer.dark .ConfirmButton.cancel {
+  background: #555;
+  color: #fff;
+}
+
+/* Statistics Grid */
+.StatisticsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.StatItem {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s;
+}
+
+.SettingsContainer.dark .StatItem {
+  background: #2a2a2a;
+  border-color: #444;
+}
+
+.StatItem:hover {
+  border-color: #667eea;
+  transform: scale(1.02);
+}
+
+.StatLabel {
+  display: block;
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.SettingsContainer.dark .StatLabel {
+  color: #aaa;
+}
+
+.StatValue {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #667eea;
+}
+
+/* About Section */
+.SettingSection.about {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  text-align: center;
+  border: 2px solid #667eea;
+}
+
+.SettingsContainer.dark .SettingSection.about {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+}
+
+.AboutText {
+  color: #667eea;
+  font-weight: 600;
+  margin: 0;
+  padding: 5px 0;
+}
+
+.SettingsContainer.dark .AboutText {
+  color: #a78bfa;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .SettingItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .InputGroup {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .SettingsHeader h1 {
+    font-size: 1.8rem;
+  }
+
+  .SettingsContent {
+    padding: 20px;
+  }
+}

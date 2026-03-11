@@ -1,76 +1,111 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import './History.css'
-const History = () => {
-  const [calculationHistory, setCalculationHistory] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('calculationHistory')) || [] } catch { return [] }
-  })
+import { getCalculationHistory, deleteCalculation, clearCalculationHistory, onCalculationsChange } from '../firebase/firebaseService';
 
-  const [taskHistory, setTaskHistory] = useState(() => {
-    try {
-      const tasks = JSON.parse(localStorage.getItem('Tasks')) || []
-      return tasks.filter(t => t.completed)
-    } catch { return [] }
-  })
+const History = ({ user, Tasks = [], completedTasks = 0 }) => {
+  const [calculationHistory, setCalculationHistory] = useState([]);
+  const [taskHistory, setTaskHistory] = useState(Tasks.filter(t => t.completed) || []);
+  const [activeTab, setActiveTab] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const [activeTab, setActiveTab] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
-
+  // Load calculation history on mount and user change
   useEffect(() => {
-    const handleStorage = (e) => {
-      if (e.key === 'calculationHistory') {
-        try { setCalculationHistory(JSON.parse(e.newValue || "[]")) } catch { setCalculationHistory([]) }
-      }
-      if (e.key === 'Tasks') {
-        try {
-          const tasks = JSON.parse(e.newValue || "[]")
-          setTaskHistory(tasks.filter(t => t.completed))
-        } catch { setTaskHistory([]) }
-      }
-    }
-    window.addEventListener('storage', handleStorage)
-    return () => window.removeEventListener('storage', handleStorage)
-  }, [])
+    if (user?.uid) {
+      setLoading(true);
+      getCalculationHistory(user.uid)
+        .then(data => {
+          setCalculationHistory(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error('Error loading calculation history:', err);
+          setError('Failed to load calculation history');
+          setLoading(false);
+        });
 
-  const deleteCalculationHistory = (index) => {
-    const updated = calculationHistory.filter((_, i) => i !== index)
-    setCalculationHistory(updated)
-    localStorage.setItem('calculationHistory', JSON.stringify(updated))
-  }
+      // Real-time listener for calculation changes
+      const unsubscribe = onCalculationsChange(user.uid, (data) => {
+        setCalculationHistory(data);
+      });
 
-  const clearAllCalculationHistory = () => {
-    if (window.confirm('Are you sure you want to clear all calculation history?')) {
-      setCalculationHistory([])
-      localStorage.setItem('calculationHistory', JSON.stringify([]))
+      return unsubscribe;
     }
-  }
+  }, [user?.uid]);
+
+  // Update task history when Tasks change
+  useEffect(() => {
+    try {
+      const tasks = Tasks || [];
+      setTaskHistory(tasks.filter(t => t.completed));
+    } catch {
+      setTaskHistory([]);
+    }
+  }, [Tasks]);
+
+  const deleteCalculationHistory = async (index) => {
+    try {
+      if (!user?.uid) return;
+      const calcToDelete = calculationHistory[index];
+      await deleteCalculation(user.uid, calcToDelete);
+    } catch (err) {
+      console.error('Error deleting calculation:', err);
+      setError('Failed to delete calculation');
+    }
+  };
+
+  const clearAllCalculationHistory = async () => {
+    try {
+      if (window.confirm('Are you sure you want to clear all calculation history?')) {
+        if (!user?.uid) return;
+        await clearCalculationHistory(user.uid);
+      }
+    } catch (err) {
+      console.error('Error clearing calculation history:', err);
+      setError('Failed to clear history');
+    }
+  };
 
   const filteredCalculations = calculationHistory.filter(calc =>
     calc.expression?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     calc.result?.toString().includes(searchTerm)
-  )
+  );
 
   const stats = useMemo(() => {
-    const tasks = JSON.parse(localStorage.getItem('Tasks')) || []
-    const totalTasks = tasks.length
-    const completedTasks = taskHistory.length
-    const completionRate = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0
-    const totalCalculations = calculationHistory.length
+    const tasks = Tasks || [];
+    const totalTasks = tasks.length;
+    const completedTasksCount = taskHistory.length;
+    const completionRate = totalTasks ? Math.round((completedTasksCount / totalTasks) * 100) : 0;
+    const totalCalculations = calculationHistory.length;
     return {
       totalTasks,
-      completedTasks,
+      completedTasks: completedTasksCount,
       completionRate,
       totalCalculations,
       averageTime: '2.5 mins'
-    }
-  }, [calculationHistory, taskHistory])
+    };
+  }, [calculationHistory, taskHistory, Tasks]);
+
+  if (!user) {
+    return (
+      <div className='HistoryContainer'>
+        <div className='HistoryContent'>
+          <p style={{ textAlign: 'center', color: '#666' }}>Please sign in to view your history</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='HistoryContainer'>
       <div className='HistoryContent'>
         <div className='HistoryHeader'>
-          <h1>📜 History & Analytics</h1>
-          <p>Track your progress and past activities</p>
+          <h1>📚 History & Analytics</h1>
+          <p>Track your progress and completed activities</p>
         </div>
+
+        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
 
         <div className='StatsOverview'>
           <div className='StatCard'>
@@ -120,6 +155,23 @@ const History = () => {
                 </div>
               ) : (
                 <div className='ActivityList'>
+                  {taskHistory.length > 0 && (
+                    <div className='ActivitySection'>
+                      <h3>✅ Completed Tasks</h3>
+                      {taskHistory.slice().reverse().map((task, index) => (
+                        <div key={index} className='ActivityItem TaskItem'>
+                          <div className='ActivityInfo'>
+                            <span className='ActivityType'>✔️ Task Completed</span>
+                            <span className='ActivityDetail'>{task.text}</span>
+                          </div>
+                          <span className='ActivityTime'>
+                            {task.createdAt ? new Date(task.createdAt).toLocaleDateString() : 'Today'}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
                   {calculationHistory.length > 0 && (
                     <div className='ActivitySection'>
                       <h3>🔢 Recent Calculations</h3>
@@ -130,21 +182,6 @@ const History = () => {
                             <span className='ActivityDetail'>{calc.expression} = {calc.result}</span>
                           </div>
                           <span className='ActivityTime'>{calc.timestamp}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {taskHistory.length > 0 && (
-                    <div className='ActivitySection'>
-                      <h3>✅ Recent Task Completions</h3>
-                      {taskHistory.slice(-5).map((task, index) => (
-                        <div key={index} className='ActivityItem TaskItem'>
-                          <div className='ActivityInfo'>
-                            <span className='ActivityType'>✔️ Task</span>
-                            <span className='ActivityDetail'>{task.text}</span>
-                          </div>
-                          <span className='ActivityTime'>Completed ✓</span>
                         </div>
                       ))}
                     </div>
@@ -210,53 +247,30 @@ const History = () => {
               {taskHistory.length === 0 ? (
                 <div className='EmptyState'>
                   <p className='EmptyIcon'>📭</p>
-                  <p>No completed tasks yet. Complete some tasks to see them here!</p>
+                  <p>No completed tasks yet. Complete a task to see it here!</p>
                 </div>
               ) : (
-                <div className='TasksList'>
-                  {taskHistory.map((task, index) => (
+                <div className='CompletedTasksList'>
+                  {taskHistory.slice().reverse().map((task, index) => (
                     <div key={index} className='CompletedTaskItem'>
                       <div className='TaskCheckmark'>✓</div>
-                      <span className='TaskName'>{task.text}</span>
-                      <span className='TaskBadge'>Completed</span>
+                      <div className='TaskInfo'>
+                        <h4>{task.text}</h4>
+                        <div className='TaskMeta'>
+                          {task.category && <span className='Category'>{task.category}</span>}
+                          {task.priority && <span className='Priority'>{task.priority}</span>}
+                          <span className='CompletedDate'>
+                            Completed: {task.createdAt ? new Date(task.createdAt).toLocaleDateString() : 'Today'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   ))}
-                  <div className='TaskSummary'>
-                    <p>🎉 You have completed <strong>{taskHistory.length}</strong> tasks!</p>
-                  </div>
                 </div>
               )}
             </div>
           )}
         </div>
-
-        {(calculationHistory.length > 0 || taskHistory.length > 0) && (
-          <div className='InsightsSection'>
-            <h2>💡 Quick Insights</h2>
-            <div className='InsightsGrid'>
-              <div className='InsightCard'>
-                <h3>🚀 Productivity Trend</h3>
-                <p className='InsightValue'>📈 Trending Upward</p>
-                <small>You're getting more productive each day!</small>
-              </div>
-              <div className='InsightCard'>
-                <h3>⚡ Peak Activity Time</h3>
-                <p className='InsightValue'>3:00 PM</p>
-                <small>Your most active time of the day</small>
-              </div>
-              <div className='InsightCard'>
-                <h3>🎯 Goal Progress</h3>
-                <p className='InsightValue'>{stats.completionRate}%</p>
-                <small>Keep going to reach 100%!</small>
-              </div>
-              <div className='InsightCard'>
-                <h3>⏱️ Avg. Task Time</h3>
-                <p className='InsightValue'>{stats.averageTime}</p>
-                <small>Your average task completion time</small>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

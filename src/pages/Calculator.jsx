@@ -1,21 +1,43 @@
 import React from 'react'
 import { useState } from 'react';
 import './Calculator.css'
-const Calculator = () => {
+import { saveCalculation } from '../firebase/firebaseService';
+
+const Calculator = ({ user }) => {
   const [hoursStudied, setHoursStudied] = useState(0);
   const [focusLevel, setFocusLevel] = useState(0);
   const [efficiency, setEfficiency] = useState(null);
   const [subjectsCovered, setSubjectsCovered] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  function calculateEfficiency() {
-    const result = hoursStudied * focusLevel + subjectsCovered * 5;
-    setEfficiency(result);
-    const history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
-    const timestamp = new Date().toLocaleString();
-    const expression = `${hoursStudied}h × ${focusLevel}focus + ${subjectsCovered}×5`;
-    history.push({ expression, result, timestamp });
-    localStorage.setItem('calculationHistory', JSON.stringify(history));
+  async function calculateEfficiency() {
+    try {
+      setError('');
+      setLoading(true);
+      
+      if (!user?.uid) {
+        setError('Please sign in to save calculations');
+        return;
+      }
+
+      const result = hoursStudied * focusLevel + subjectsCovered * 5;
+      setEfficiency(result);
+
+      const timestamp = new Date().toLocaleString();
+      const expression = `${hoursStudied}h × ${focusLevel}focus + ${subjectsCovered}×5`;
+      const calculation = { expression, result, timestamp };
+
+      // Save to Firebase
+      await saveCalculation(user.uid, calculation);
+    } catch (err) {
+      console.error('Error saving calculation:', err);
+      setError('Failed to save calculation. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   }
+
   function verdict(value) {
     if (value >= 80) return "Excellent";
     else if (value >= 50) return "Good";
@@ -27,6 +49,8 @@ const Calculator = () => {
     <div className='main'>
       <div className='Calculator'>
         <h3>Know your efficiency for this day</h3>
+
+        {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
 
         <input type="number" placeholder="hoursStudied"
           onChange={(e) => setHoursStudied(Number(e.target.value))}
@@ -40,7 +64,9 @@ const Calculator = () => {
           onChange={(e) => setSubjectsCovered(Number(e.target.value))}
         />
 
-        <button onClick={calculateEfficiency}>Submit</button>
+        <button onClick={calculateEfficiency} disabled={loading}>
+          {loading ? 'Saving...' : 'Submit'}
+        </button>
 
         {efficiency !== null && (
           <>

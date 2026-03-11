@@ -1,0 +1,260 @@
+.TaskManagerPageContainer {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.TaskManagerPageContent {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.PageHeader {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.PageHeader h1 {
+  font-size: 2.5rem;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.PageHeader p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.TaskStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.StatBox {
+  background: #f3f4f6;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #667eea;
+  border-left: 4px solid #667eea;
+}
+
+.AddTaskForm {
+  display: grid;
+  grid-template-columns: 1fr 150px 150px 150px 120px;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 10px;
+  align-items: center;
+}
+
+.TaskInput,
+.SelectInput {
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.TaskInput::placeholder {
+  color: #999;
+}
+
+.TaskInput:focus,
+.SelectInput:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.AddButton {
+  padding: 12px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.AddButton:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.FilterTabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.FilterTab {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.FilterTab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+}
+
+.FilterTab:hover {
+  color: #667eea;
+}
+
+.EmptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.TasksGrid {
+  display: grid;
+  gap: 15px;
+}
+
+.TaskCard {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 15px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.TaskCard:hover {
+  border-color: #667eea;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.TaskCard.completed {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.TaskCard.completed .TaskTitle {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.TaskHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.TaskCheckbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+.TaskTitle {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+.DeleteButton {
+  background: #ef4444;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.DeleteButton:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+.TaskMeta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.CategoryBadge,
+.PriorityBadge,
+.StatusBadge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+}
+
+.CategoryBadge {
+  background: #3b82f6;
+}
+
+.PriorityBadge {
+  letter-spacing: 0.5px;
+}
+
+.StatusBadge {
+  letter-spacing: 0.5px;
+}
+
+.DeadlineInfo {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.TaskDetails {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.TaskDetails p {
+  margin: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .AddTaskForm {
+    grid-template-columns: 1fr;
+  }
+
+  .TaskStats {
+    grid-template-columns: 1fr;
+  }
+
+  .PageHeader h1 {
+    font-size: 1.8rem;
+  }
+}

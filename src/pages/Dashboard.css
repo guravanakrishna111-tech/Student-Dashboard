@@ -1,0 +1,209 @@
+.DashboardContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.DashboardContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Metrics Section */
+.MetricsSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.MetricCard {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+  border-top: 4px solid;
+  position: relative;
+  overflow: hidden;
+}
+
+.MetricCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.MetricCard.primary {
+  border-top-color: #667eea;
+}
+
+.MetricCard.success {
+  border-top-color: #10B981;
+}
+
+.MetricCard.warning {
+  border-top-color: #F59E0B;
+}
+
+.MetricCard.fire {
+  border-top-color: #EF4444;
+}
+
+.MetricIcon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.MetricDetails h3 {
+  margin: 0 0 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.MetricNumber {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.MetricBar {
+  margin-top: 15px;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.Bar {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+/* Score Section */
+.ScoreSection {
+  margin-bottom: 40px;
+}
+
+.ScoreCard {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.ScoreCard h2 {
+  margin: 0 0 30px 0;
+  font-size: 1.8rem;
+  color: #1f2937;
+}
+
+.ScoreDisplay {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.CircularProgress {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.CircularSvg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.ScoreText {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.ScoreValue {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.ScoreLabel {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ScoreMessage {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Task Manager Section */
+.TaskManagerSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Stats Wrapper */
+.StatsWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .MetricsSection {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .MetricCard {
+    padding: 15px;
+  }
+
+  .MetricIcon {
+    font-size: 2rem;
+  }
+
+  .MetricNumber {
+    font-size: 1.5rem;
+  }
+
+  .ScoreCard {
+    padding: 20px;
+  }
+
+  .CircularProgress {
+    width: 150px;
+    height: 150px;
+  }
+
+  .ScoreValue {
+    font-size: 2rem;
+  }
+
+  .DashboardContent {
+    padding: 20px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .MetricsSection {
+    grid-template-columns: 1fr;
+  }
+}
