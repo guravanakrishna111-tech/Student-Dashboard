@@ -88,6 +88,14 @@ Student-Dashboard
 
 ---
 
+## 🔐 Authentication Notes
+
+Before running the app you need to enable the authentication methods you intend to use (email/password and/or Google) in the Firebase console for the project defined in `src/firebase/firebaseconfig.js`.
+
+A simple login/register page is available at `/login`. The navigation bar shows a "Sign In" link when the user is not authenticated and switches to the user's email & a logout button after signing in. All data pages display a message asking the visitor to sign in.
+
+> **Routing note for GitHub Pages:** the app now uses `HashRouter` (URL fragments like `/#/settings`) so that client-side navigation works after refreshing or when users share links. No server configuration is required; just deploy the `dist` folder as usual.
+
 ## ⚙️ Installation & Setup
 
 Clone the repository
@@ -126,6 +134,26 @@ npm run build
 
 This project is deployed using **GitHub Pages** via the production build folder (`dist`).
 
+### GitHub Pages
+1. Add a `homepage` field to `package.json` (e.g. `"homepage": "https://<username>.github.io/Student-Dashboard"`).
+2. Install the gh-pages package if you don't already: `npm install --save-dev gh-pages`.
+3. Add deployment scripts:
+   ```json
+   "scripts": {
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d dist"
+   }
+   ```
+4. Run `npm run deploy`.
+
+### Firebase Hosting (alternate)
+1. Install CLI: `npm install -g firebase-tools` and run `firebase login`.
+2. Initialize hosting inside the repo and select `dist` as the public directory.
+3. When prompted, configure as a single‑page app (rewrite all urls to `/index.html`).
+4. Build the project (`npm run build`) and deploy with `firebase deploy`.
+
+> Note: ensure the Firebase project in `src/firebase/firebaseconfig.js` matches the one you deploy to.
+
 ---
 
 ## 🎯 Learning Outcomes
@@ -136,6 +164,7 @@ This project demonstrates:
 * React routing structure
 * UI state handling
 * Modular CSS design
+* **Firebase authentication** (email/password and Google sign‑in) with protected routes
 * Production build deployment
 
 ---

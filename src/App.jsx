@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import './App.css'
 
 import Navbar from "./Components/Navbar";
+import ErrorBoundary from "./Components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import Calculator from "./pages/Calculator";
 import History from "./pages/History";
@@ -10,12 +11,15 @@ import Profile from "./pages/Profile";
 import TaskManagerPage from "./pages/TaskManagerPage";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
 import { onAuthChange } from './firebase/firebaseService';
 import { getTasks, saveTasks } from './firebase/firebaseService';
 
 const App = () => {
-const [user, setUser] = useState(null);
-const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
 const [Tasks, setTasks] = useState([]);
 
@@ -30,6 +34,16 @@ useEffect(() => {
   });
   return unsubscribe;
 }, []);
+
+// Redirect to login if not authenticated (once initial load completes)
+useEffect(() => {
+  if (!loading && !user) {
+    // don't redirect if we're already on the login page
+    if (location.pathname !== '/login') {
+      navigate('/login');
+    }
+  }
+}, [loading, user, navigate, location]);
 
 // Load tasks from Firestore when user changes
 useEffect(() => {
@@ -79,7 +93,8 @@ return (
   <>
     <Navbar user={user} />
 
-    <Routes>
+    <ErrorBoundary>
+      <Routes>
       <Route
         path="/"
         element={
@@ -93,6 +108,7 @@ return (
         }
       />
 
+      <Route path="/login" element={<Login />} />
       <Route path="/calculator" element={<Calculator user={user} />} />
       <Route path="/history" element={<History user={user} Tasks={Tasks} completedTasks={completedTasks} />} />
       <Route path="/profile" element={<Profile user={user} score={score} Tasks={Tasks} />} />
@@ -100,7 +116,8 @@ return (
       <Route path="/analytics" element={<Analytics user={user} Tasks={Tasks} />} />
       <Route path="/settings" element={<Settings user={user} Tasks={Tasks} setTasks={setTasks} />} />
 
-    </Routes>
+      </Routes>
+    </ErrorBoundary>
   </>
 );
 };

@@ -83,7 +83,9 @@ const Dashboard = ({ user, Tasks = [], setTasks, completedTasks = 0, score = 0 }
   if (!user) {
     return (
       <div className="DashboardContainer">
-        <p style={{ textAlign: 'center', color: '#666' }}>Please sign in to view your dashboard</p>
+        <p style={{ textAlign: 'center', color: '#666' }}>
+          Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to view your dashboard
+        </p>
       </div>
     );
   }

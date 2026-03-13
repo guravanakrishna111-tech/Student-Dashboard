@@ -96,7 +96,9 @@ const TaskManagerPage = ({ user, Tasks, setTasks }) => {
   if (!user) {
     return (
       <div className='TaskManagerPageContainer'>
-        <p style={{ textAlign: 'center', color: '#666' }}>Please sign in to manage tasks</p>
+        <p style={{ textAlign: 'center', color: '#666' }}>
+          Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to manage tasks
+        </p>
       </div>
     );
   }

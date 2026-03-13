@@ -20,6 +20,50 @@ export const getCurrentUserId = () => {
   return auth.currentUser?.uid;
 };
 
+// ================= AUTHENTICATION HELPERS =================
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+
+/**
+ * Sign in an existing user using email and password.
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<import("firebase/auth").UserCredential>}
+ */
+export const signIn = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+/**
+ * Create a new user (register) with email and password.
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<import("firebase/auth").UserCredential>}
+ */
+export const signUp = (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
+/**
+ * Send a password reset email to the given address.
+ * @param {string} email
+ * @returns {Promise<void>}
+ */
+export const resetPassword = (email) => {
+  return sendPasswordResetEmail(auth, email);
+};
+
+// Google provider
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+const googleProvider = new GoogleAuthProvider();
+
+/**
+ * Sign in using Google popup
+ * @returns {Promise<import("firebase/auth").UserCredential>}
+ */
+export const signInWithGoogle = () => {
+  return signInWithPopup(auth, googleProvider);
+};
+
 // Listen to auth state changes
 export const onAuthChange = (callback) => {
   return onAuthStateChanged(auth, callback);
@@ -147,7 +191,9 @@ export const onCalculationsChange = (userId, callback) => {
 export const saveProfile = async (userId, profile) => {
   try {
     if (!userId) return;
-    const userRef = doc(db, 'users', userId, 'profile');
+    // Store profile under a document within a "data" subcollection to keep
+    // user-level data organized (consistent with tasks / calculations).
+    const userRef = doc(db, 'users', userId, 'data', 'profile');
     await setDoc(userRef, { ...profile, updatedAt: new Date() }, { merge: true });
     return true;
   } catch (error) {
@@ -160,7 +206,7 @@ export const saveProfile = async (userId, profile) => {
 export const getProfile = async (userId) => {
   try {
     if (!userId) return {};
-    const userRef = doc(db, 'users', userId, 'profile');
+    const userRef = doc(db, 'users', userId, 'data', 'profile');
     const docSnap = await getDoc(userRef);
     return docSnap.exists() ? docSnap.data() : {};
   } catch (error) {
@@ -172,7 +218,7 @@ export const getProfile = async (userId) => {
 // Real-time listener for profile
 export const onProfileChange = (userId, callback) => {
   if (!userId) return () => {};
-  const userRef = doc(db, 'users', userId, 'profile');
+  const userRef = doc(db, 'users', userId, 'data', 'profile');
   return onSnapshot(userRef, (docSnap) => {
     if (docSnap.exists()) {
       callback(docSnap.data());
@@ -188,7 +234,7 @@ export const onProfileChange = (userId, callback) => {
 export const saveSettings = async (userId, settings) => {
   try {
     if (!userId) return;
-    const userRef = doc(db, 'users', userId, 'settings');
+    const userRef = doc(db, 'users', userId, 'data', 'settings');
     await setDoc(userRef, { ...settings, updatedAt: new Date() }, { merge: true });
     return true;
   } catch (error) {
@@ -201,7 +247,7 @@ export const saveSettings = async (userId, settings) => {
 export const getSettings = async (userId) => {
   try {
     if (!userId) return {};
-    const userRef = doc(db, 'users', userId, 'settings');
+    const userRef = doc(db, 'users', userId, 'data', 'settings');
     const docSnap = await getDoc(userRef);
     return docSnap.exists() ? docSnap.data() : {};
   } catch (error) {
@@ -213,7 +259,7 @@ export const getSettings = async (userId) => {
 // Real-time listener for settings
 export const onSettingsChange = (userId, callback) => {
   if (!userId) return () => {};
-  const userRef = doc(db, 'users', userId, 'settings');
+  const userRef = doc(db, 'users', userId, 'data', 'settings');
   return onSnapshot(userRef, (docSnap) => {
     if (docSnap.exists()) {
       callback(docSnap.data());

@@ -4,6 +4,7 @@ import { getSettings, saveSettings, onSettingsChange } from '../firebase/firebas
 import { saveTasks } from '../firebase/firebaseService';
 
 const Settings = ({ user, Tasks, setTasks }) => {
+  console.log('Settings component render', { user, Tasks });
   const [settings, setSettings] = useState({
     darkMode: false,
     username: '',
@@ -19,42 +20,44 @@ const Settings = ({ user, Tasks, setTasks }) => {
 
   // Load settings on mount
   useEffect(() => {
-    if (user?.uid) {
-      setLoading(true);
-      getSettings(user.uid)
-        .then(data => {
-          const loadedSettings = data || {
-            darkMode: false,
-            username: '',
-            notifications: true,
-            emailNotifications: false
-          };
-          setSettings(loadedSettings);
-          setUsername(loadedSettings.username || '');
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error('Error loading settings:', err);
-          setError('Failed to load settings');
-          setLoading(false);
-        });
+    if (!user?.uid) {
+      setLoading(false);
+      return;
+    }
 
-      // Real-time listener for settings changes
-      const unsubscribe = onSettingsChange(user.uid, (data) => {
-        const updatedSettings = data || {
+    setLoading(true);
+    getSettings(user.uid)
+      .then(data => {
+        const loadedSettings = data || {
           darkMode: false,
           username: '',
           notifications: true,
           emailNotifications: false
         };
-        setSettings(updatedSettings);
-        setUsername(updatedSettings.username || '');
+        setSettings(loadedSettings);
+        setUsername(loadedSettings.username || '');
+      })
+      .catch(err => {
+        console.error('Error loading settings:', err);
+        setError('Failed to load settings');
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
-      return unsubscribe;
-    } else {
-      setLoading(false);
-    }
+    // Real-time listener for settings changes
+    const unsubscribe = onSettingsChange(user.uid, (data) => {
+      const updatedSettings = data || {
+        darkMode: false,
+        username: '',
+        notifications: true,
+        emailNotifications: false
+      };
+      setSettings(updatedSettings);
+      setUsername(updatedSettings.username || '');
+    });
+
+    return unsubscribe;
   }, [user?.uid]);
 
   // Apply dark mode
@@ -152,7 +155,9 @@ const Settings = ({ user, Tasks, setTasks }) => {
   if (!user) {
     return (
       <div className='SettingsContainer'>
-        <p style={{ textAlign: 'center', color: '#666' }}>Please sign in to access settings</p>
+        <p style={{ textAlign: 'center', color: '#666' }}>
+          Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to access settings
+        </p>
       </div>
     );
   }

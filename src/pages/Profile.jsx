@@ -5,6 +5,7 @@ import './Profile.css'
 import { getProfile, saveProfile, onProfileChange } from '../firebase/firebaseService';
 
 const Profile = ({ user, score = 0, Tasks = [] }) => {
+    console.log('Profile component render', { user, score, Tasks });
     const[profile,setProfile]=useState({
         name:"",
         mail:"",
@@ -17,38 +18,40 @@ const Profile = ({ user, score = 0, Tasks = [] }) => {
 
     // Load profile on mount
     useEffect(()=>{
-        if (user?.uid) {
-            setLoading(true);
-            getProfile(user.uid)
-                .then(data => {
-                    setProfile(data || {
-                        name:"",
-                        mail:"",
-                        number:"",
-                        location:""
-                    });
-                    setLoading(false);
-                })
-                .catch(err => {
-                    console.error('Error loading profile:', err);
-                    setError('Failed to load profile');
-                    setLoading(false);
-                });
+        if (!user?.uid) {
+            setLoading(false);
+            return;
+        }
 
-            // Real-time listener for profile changes
-            const unsubscribe = onProfileChange(user.uid, (data) => {
+        setLoading(true);
+        getProfile(user.uid)
+            .then(data => {
                 setProfile(data || {
                     name:"",
                     mail:"",
                     number:"",
                     location:""
                 });
+            })
+            .catch(err => {
+                console.error('Error loading profile:', err);
+                setError('Failed to load profile');
+            })
+            .finally(() => {
+                setLoading(false);
             });
 
-            return unsubscribe;
-        } else {
-            setLoading(false);
-        }
+        // Real-time listener for profile changes
+        const unsubscribe = onProfileChange(user.uid, (data) => {
+            setProfile(data || {
+                name:"",
+                mail:"",
+                number:"",
+                location:""
+            });
+        });
+
+        return unsubscribe;
     }, [user?.uid]);
 
     const handleChange=(e)=>{
@@ -84,7 +87,9 @@ const Profile = ({ user, score = 0, Tasks = [] }) => {
     if (!user) {
         return (
             <div className='ProfileContainer'>
-                <p style={{ textAlign: 'center', color: '#666' }}>Please sign in to view your profile</p>
+                <p style={{ textAlign: 'center', color: '#666' }}>
+                  Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to view your profile
+                </p>
             </div>
         );
     }

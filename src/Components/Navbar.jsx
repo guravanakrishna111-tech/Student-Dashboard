@@ -62,7 +62,9 @@ const Navbar = ({ user }) => {
               </button>
             </>
           ) : (
-            <span style={{ fontSize: '14px', color: '#666' }}>Please sign in</span>
+            <>
+              <Link to="/login" style={{ fontSize: '14px', color: '#667eea', textDecoration: 'none' }}>Sign In</Link>
+            </>
           )}
         </div>
       
