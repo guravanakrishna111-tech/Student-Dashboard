@@ -1,15 +1,17 @@
 {
   "name": "dashboard",
-  "homepage": "https://guravanakrishna111-tech.github.io/Student-Dashboard",
+  "homepage": "https://guravanakrishna111-tech.github.io/Student-Dashboard/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-"scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist"
-},
+
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+
   "dependencies": {
     "firebase": "^12.10.0",
     "react": "^19.2.0",
@@ -17,6 +19,7 @@
     "react-router-dom": "^7.13.0",
     "recharts": "^3.8.0"
   },
+
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.7",
